@@ -1,0 +1,1631 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The TV Signal — Tuesday, January 27, 2026</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: #e0e0e0;
+        background: #0d1117;
+        padding: 16px;
+        max-width: 720px;
+        margin: 0 auto;
+      }
+
+      /* --- Header --- */
+      .header {
+        text-align: center;
+        padding: 32px 0 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        margin-bottom: 24px;
+      }
+      .header h1 {
+        font-size: 32px;
+        font-weight: 800;
+        color: #fff;
+        letter-spacing: -0.5px;
+      }
+      .header .tagline {
+        font-size: 12px;
+        color: #6b7280;
+        margin-top: 4px;
+        font-style: italic;
+      }
+      .header .date {
+        font-size: 14px;
+        color: #9ca3af;
+        margin-top: 8px;
+      }
+      .header .last-updated {
+        font-size: 11px;
+        color: #6b7280;
+        margin-top: 2px;
+      }
+
+      /* --- Stats Dashboard (#6) --- */
+      .stats-dashboard {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin-bottom: 24px;
+        backdrop-filter: blur(10px);
+      }
+      .stats-dashboard h3 {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #6b7280;
+        margin-bottom: 12px;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .stat-item {
+        background: rgba(255,255,255,0.03);
+        border-radius: 8px;
+        padding: 10px 12px;
+      }
+      .stat-value {
+        font-size: 22px;
+        font-weight: 700;
+        color: #fff;
+      }
+      .stat-label {
+        font-size: 11px;
+        color: #6b7280;
+        margin-top: 2px;
+      }
+      .stat-hottest {
+        grid-column: 1 / -1;
+        font-size: 12px;
+        color: #9ca3af;
+        padding: 8px 12px;
+        background: rgba(255,255,255,0.03);
+        border-radius: 8px;
+      }
+      .stat-hottest strong { color: #f59e0b; }
+
+      /* --- Controls bar (#4, #24) --- */
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+        align-items: center;
+      }
+      .controls-section {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .controls-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #6b7280;
+        margin-right: 4px;
+      }
+      .filter-btn, .mode-btn {
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: #9ca3af;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .filter-btn:hover, .mode-btn:hover {
+        background: rgba(255,255,255,0.1);
+        color: #e0e0e0;
+      }
+      .filter-btn.active, .mode-btn.active {
+        background: rgba(99,102,241,0.2);
+        border-color: rgba(99,102,241,0.4);
+        color: #a5b4fc;
+      }
+
+      /* --- My Shows panel (#22) --- */
+      .my-shows-panel {
+        background: rgba(251,191,36,0.06);
+        border: 1px solid rgba(251,191,36,0.15);
+        border-radius: 12px;
+        padding: 14px 18px;
+        margin-bottom: 20px;
+        display: none;
+      }
+      .my-shows-panel.visible { display: block; }
+      .my-shows-panel h3 {
+        font-size: 13px;
+        color: #fbbf24;
+        margin-bottom: 8px;
+      }
+      .my-shows-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .my-show-tag {
+        background: rgba(251,191,36,0.12);
+        border: 1px solid rgba(251,191,36,0.2);
+        color: #fbbf24;
+        padding: 2px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+        cursor: pointer;
+      }
+      .my-show-tag:hover { background: rgba(251,191,36,0.2); }
+
+      /* --- Bookmarks panel (#36) --- */
+      .bookmarks-panel {
+        background: rgba(99,102,241,0.06);
+        border: 1px solid rgba(99,102,241,0.15);
+        border-radius: 12px;
+        padding: 14px 18px;
+        margin-bottom: 20px;
+        display: none;
+      }
+      .bookmarks-panel.visible { display: block; }
+      .bookmarks-panel h3 {
+        font-size: 13px;
+        color: #a5b4fc;
+        margin-bottom: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .bookmark-export-btn {
+        font-size: 11px;
+        background: rgba(99,102,241,0.15);
+        border: 1px solid rgba(99,102,241,0.3);
+        color: #a5b4fc;
+        padding: 2px 10px;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+      .bookmarks-list { font-size: 13px; }
+      .bookmarks-list a {
+        color: #a5b4fc;
+        text-decoration: none;
+        display: block;
+        padding: 4px 0;
+      }
+      .bookmarks-list a:hover { color: #c4b5fd; }
+
+      /* --- Degraded notice --- */
+      .degraded-notice {
+        background: rgba(251,191,36,0.1);
+        border: 1px solid rgba(251,191,36,0.3);
+        border-radius: 10px;
+        padding: 12px 16px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        color: #fbbf24;
+      }
+
+      /* --- Post cards --- */
+      .post {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 14px;
+        padding: 20px;
+        margin-bottom: 20px;
+        backdrop-filter: blur(10px);
+        transition: border-color 0.2s;
+        position: relative;
+      }
+      .post:hover { border-color: rgba(255,255,255,0.15); }
+      .post.tracked-show { border-left: 3px solid #fbbf24; }
+      .post.read-post { opacity: 0.45; }
+      .post.read-post .post-title { text-decoration: line-through; }
+      .post.hidden-post { display: none; }
+
+      /* Spoiler blur (#20) */
+      .post.spoiler-post .spoiler-content { filter: blur(6px); transition: filter 0.3s; }
+      .post.spoiler-post .spoiler-content.revealed { filter: none; }
+      .spoiler-banner {
+        background: rgba(239,68,68,0.15);
+        border: 1px solid rgba(239,68,68,0.3);
+        color: #fca5a5;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .spoiler-toggle {
+        font-size: 11px;
+        color: #9ca3af;
+        cursor: pointer;
+        margin-left: 8px;
+        text-decoration: underline;
+      }
+
+      /* Trending badge (#3) */
+      .trending-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: rgba(239,68,68,0.15);
+        border: 1px solid rgba(239,68,68,0.3);
+        color: #fca5a5;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 2px 10px;
+        border-radius: 12px;
+        animation: pulse-badge 2s infinite;
+        margin-bottom: 8px;
+      }
+      @keyframes pulse-badge {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.6; }
+      }
+
+      .post-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #fff;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 8px;
+        line-height: 1.3;
+      }
+      .post-title:hover { color: #a5b4fc; }
+
+      .post-meta {
+        font-size: 13px;
+        color: #6b7280;
+        margin-bottom: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* Comment count badges (#1) */
+      .badge-comments {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        padding: 1px 8px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 12px;
+      }
+      .badge-500 { background: rgba(239,68,68,0.2); color: #fca5a5; }
+      .badge-100 { background: rgba(249,115,22,0.2); color: #fdba74; }
+      .badge-50  { background: rgba(59,130,246,0.2); color: #93c5fd; }
+
+      /* Flair tags (#1) */
+      .flair {
+        display: inline-block;
+        background: rgba(99,102,241,0.15);
+        color: #a5b4fc;
+        padding: 1px 10px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 500;
+        border: 1px solid rgba(99,102,241,0.25);
+      }
+
+      /* Sentiment badge (#7) */
+      .sentiment-badge {
+        font-size: 11px;
+        padding: 1px 8px;
+        border-radius: 10px;
+        font-weight: 500;
+      }
+      .sentiment-positive { background: rgba(34,197,94,0.15); color: #86efac; }
+      .sentiment-negative { background: rgba(239,68,68,0.15); color: #fca5a5; }
+      .sentiment-mixed    { background: rgba(249,115,22,0.15); color: #fdba74; }
+      .sentiment-neutral   { background: rgba(107,114,128,0.15); color: #9ca3af; }
+
+      /* Consensus badge (#26) */
+      .consensus-badge {
+        font-size: 11px;
+        padding: 1px 8px;
+        border-radius: 10px;
+        font-weight: 500;
+      }
+      .consensus-consensus { background: rgba(34,197,94,0.15); color: #86efac; }
+      .consensus-divided   { background: rgba(249,115,22,0.15); color: #fdba74; }
+
+      /* Reading time (#23) */
+      .reading-time {
+        font-size: 11px;
+        color: #6b7280;
+      }
+
+      /* Action buttons (#8) */
+      .post-actions {
+        display: flex;
+        gap: 6px;
+        margin-top: 12px;
+      }
+      .action-btn {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: #6b7280;
+        padding: 4px 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .action-btn:hover { background: rgba(255,255,255,0.1); color: #e0e0e0; }
+      .action-btn.active { color: #a5b4fc; border-color: rgba(99,102,241,0.3); }
+      .track-btn.active { color: #fbbf24; border-color: rgba(251,191,36,0.3); }
+
+      /* --- Comments section (#2) --- */
+      .comments-section {
+        border-top: 1px solid rgba(255,255,255,0.06);
+        padding-top: 14px;
+        margin-top: 14px;
+      }
+      .comments-count-label {
+        font-size: 11px;
+        color: #6b7280;
+        margin-bottom: 10px;
+      }
+
+      .comment {
+        padding: 10px 14px;
+        border-left: 3px solid rgba(99,102,241,0.4);
+        margin-bottom: 10px;
+        font-size: 14px;
+        background: rgba(255,255,255,0.02);
+        border-radius: 0 8px 8px 0;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      }
+      .comment-meta {
+        font-size: 12px;
+        color: #6b7280;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .comment-score { color: #86efac; }
+      .comment-body {
+        color: #d1d5db;
+        word-wrap: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      /* Catalyst comment (#19) */
+      .comment.catalyst {
+        border-left-color: #fbbf24;
+        background: rgba(251,191,36,0.04);
+      }
+      .catalyst-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: #fbbf24;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-bottom: 4px;
+      }
+
+      /* Creator comment (#34) */
+      .comment.creator {
+        border-left-color: #a855f7;
+        background: rgba(168,85,247,0.06);
+      }
+      .creator-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: #a855f7;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-bottom: 4px;
+      }
+
+      /* --- Footer --- */
+      .footer {
+        text-align: center;
+        padding: 28px 0 16px;
+        font-size: 12px;
+        color: #4b5563;
+        border-top: 1px solid rgba(255,255,255,0.06);
+        margin-top: 8px;
+      }
+      .footer a { color: #6b7280; text-decoration: none; }
+      .footer a:hover { color: #9ca3af; }
+      .footer .impact {
+        font-size: 11px;
+        color: #4b5563;
+        margin-bottom: 12px;
+        line-height: 1.6;
+      }
+      .footer .social-proof {
+        font-size: 11px;
+        color: #4b5563;
+        margin-top: 8px;
+      }
+
+      /* --- Difficulty modes (#24) --- */
+      .mode-quick .comment:nth-child(n+2) { display: none; }
+      .mode-quick .comment-body { -webkit-line-clamp: 2; }
+      .mode-deep .comment-body { -webkit-line-clamp: unset; overflow: visible; }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>The TV Signal</h1>
+      <div class="tagline">Cutting through Reddit's noise since January 2026</div>
+      <div class="date">Tuesday, January 27, 2026</div>
+      <div class="last-updated">Last updated 2026-01-27 21:08:43 EST</div>
+    </div>
+
+    
+
+    
+    
+    <div class="stats-dashboard">
+      <h3>Today's Digest</h3>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-value">8</div>
+          <div class="stat-label">Discussions found</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">3,256</div>
+          <div class="stat-label">Total comments</div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-value">17</div>
+          <div class="stat-label">Noise posts filtered</div>
+        </div>
+        
+        
+        <div class="stat-hottest">
+          Hottest: <strong>What Tv show do you think was genuinely great...</strong> (710 comments)
+        </div>
+        
+      </div>
+    </div>
+    
+
+    
+    <div class="controls">
+      <div class="controls-section" id="flair-filters">
+        <span class="controls-label">Filter:</span>
+        <button class="filter-btn active" data-flair="all" onclick="filterByFlair('all')">All</button>
+      </div>
+      <div class="controls-section">
+        <span class="controls-label">Mode:</span>
+        <button class="mode-btn" data-mode="quick" onclick="setMode('quick')">Quick Hits</button>
+        <button class="mode-btn active" data-mode="standard" onclick="setMode('standard')">Standard</button>
+        <button class="mode-btn" data-mode="deep" onclick="setMode('deep')">Deep Dive</button>
+      </div>
+    </div>
+
+    
+    <div class="my-shows-panel" id="my-shows-panel">
+      <h3>My Shows</h3>
+      <div class="my-shows-list" id="my-shows-list"></div>
+    </div>
+
+    
+    <div class="bookmarks-panel" id="bookmarks-panel">
+      <h3>
+        <span>Bookmarks</span>
+        <button class="bookmark-export-btn" onclick="exportBookmarks()">Export CSV</button>
+      </h3>
+      <div class="bookmarks-list" id="bookmarks-list"></div>
+    </div>
+
+    
+    
+    <div class="post"
+         id="post-t3_1qnmru9"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1qnmru9"
+         data-title="What Tv show do you think was genuinely great but suffered long-term because it aired on the “wrong” network or at the wrong time?"
+         data-url="https://www.reddit.com/r/television/comments/1qnmru9/what_tv_show_do_you_think_was_genuinely_great_but/"
+         data-comments="710">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1qnmru9/what_tv_show_do_you_think_was_genuinely_great_but/" target="_blank">What Tv show do you think was genuinely great but suffered long-term because it aired on the “wrong” network or at the wrong time?</a>
+
+        <div class="post-meta">
+          <span>&#9650; 490</span>
+
+          
+          
+          <span class="badge-comments badge-500">710</span>
+          
+
+          <span>by Air-Bombay</span>
+
+          
+          
+          <span>19h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-positive">😍 Positive vibes</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comments-count-label">Showing 3 of 710 comments</div>
+          
+          <div class="comment catalyst">
+            
+            
+            
+            
+            <div class="catalyst-label">Conversation Catalyst</div>
+            
+            <div class="comment-meta">
+              <span>pistachio-pie</span>
+              <span class="comment-score">&#9650; 615</span>
+            </div>
+            <div class="comment-body">Don’t Trust The B In Apartment 23 suffered from the wrong network, wrong time, wrong air order, and wrong title.</div>
+          </div>
+          
+          <div class="comment">
+            
+            
+            
+            
+            <div class="comment-meta">
+              <span>MusclyArmPaperboy</span>
+              <span class="comment-score">&#9650; 502</span>
+            </div>
+            <div class="comment-body">Arrested Development
+
+Could have been an NBC hit</div>
+          </div>
+          
+          <div class="comment">
+            
+            
+            
+            
+            <div class="comment-meta">
+              <span>Maiyku</span>
+              <span class="comment-score">&#9650; 405</span>
+            </div>
+            <div class="comment-body">Better Off Ted.
+
+I think the show was a little ahead of its time and would’ve benefitted from a release even 5 years later. It was also let down by being shifted constantly. They couldn’t decide what time slot to put it in.
+
+Amazing show though.</div>
+          </div>
+          
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1qnmru9')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1qnmru9')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1qnmru9/what_tv_show_do_you_think_was_genuinely_great_but/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1qnmru9', decodeURIComponent('What%20Tv%20show%20do%20you%20think%20was%20genuinely%20great%20but%20suffered%20long-term%20because%20it%20aired%20on%20the%20%E2%80%9Cwrong%E2%80%9D%20network%20or%20at%20the%20wrong%20time%3F'), 'https://www.reddit.com/r/television/comments/1qnmru9/what_tv_show_do_you_think_was_genuinely_great_but/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1qnstlq"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1qnstlq"
+         data-title="‘The Last Of Us’ Star Kaitlyn Dever Says She’s Looking Forward To “Going Back In Time” To Tell Abby’s POV As Season 3 Production Nears"
+         data-url="https://www.reddit.com/r/television/comments/1qnstlq/the_last_of_us_star_kaitlyn_dever_says_shes/"
+         data-comments="671">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1qnstlq/the_last_of_us_star_kaitlyn_dever_says_shes/" target="_blank">‘The Last Of Us’ Star Kaitlyn Dever Says She’s Looking Forward To “Going Back In Time” To Tell Abby’s POV As Season 3 Production Nears</a>
+
+        <div class="post-meta">
+          <span>&#9650; 2044</span>
+
+          
+          
+          <span class="badge-comments badge-500">671</span>
+          
+
+          <span>by bwermer</span>
+
+          
+          
+          <span>16h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-mixed">⚖️ Mixed reactions</span>
+
+          
+          
+          <span class="consensus-badge consensus-divided">⚡ Divided Community (50% split)</span>
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comments-count-label">Showing 3 of 671 comments</div>
+          
+          <div class="comment catalyst">
+            
+            
+            
+            
+            <div class="catalyst-label">Conversation Catalyst</div>
+            
+            <div class="comment-meta">
+              <span>reillyqyote</span>
+              <span class="comment-score">&#9650; 2923</span>
+            </div>
+            <div class="comment-body">It&#39;s wild to me they didn&#39;t film season 2 and 3 simultaneously. What a huge miss</div>
+          </div>
+          
+          <div class="comment">
+            
+            
+            
+            
+            <div class="comment-meta">
+              <span>Popularpressure29</span>
+              <span class="comment-score">&#9650; 984</span>
+            </div>
+            <div class="comment-body">I know everyone complains about production lag times these days but TLOU is really going to be hurt by this. Season 2 and 3 are two halves of the same story and this is an absolute momentum killer.</div>
+          </div>
+          
+          <div class="comment">
+            
+            
+            
+            
+            <div class="comment-meta">
+              <span>PablosCocaineHippo</span>
+              <span class="comment-score">&#9650; 308</span>
+            </div>
+            <div class="comment-body">I feel bad for her. She&#39;s such a good actress but the show really took a nosedive in season 2.</div>
+          </div>
+          
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1qnstlq')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1qnstlq')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1qnstlq/the_last_of_us_star_kaitlyn_dever_says_shes/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1qnstlq', decodeURIComponent('%E2%80%98The%20Last%20Of%20Us%E2%80%99%20Star%20Kaitlyn%20Dever%20Says%20She%E2%80%99s%20Looking%20Forward%20To%20%E2%80%9CGoing%20Back%20In%20Time%E2%80%9D%20To%20Tell%20Abby%E2%80%99s%20POV%20As%20Season%203%20Production%20Nears'), 'https://www.reddit.com/r/television/comments/1qnstlq/the_last_of_us_star_kaitlyn_dever_says_shes/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1qngknn"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1qngknn"
+         data-title="Paramount Cancels &#39;Ren &amp; Stimpy&#39; Reboot"
+         data-url="https://www.reddit.com/r/television/comments/1qngknn/paramount_cancels_ren_stimpy_reboot/"
+         data-comments="493">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1qngknn/paramount_cancels_ren_stimpy_reboot/" target="_blank">Paramount Cancels &#39;Ren &amp; Stimpy&#39; Reboot</a>
+
+        <div class="post-meta">
+          <span>&#9650; 2405</span>
+
+          
+          
+          <span class="badge-comments badge-100">493</span>
+          
+
+          <span>by SleuthDoggyDawg</span>
+
+          
+          
+          <span>23h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-negative">😬 Critical reception</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comments-count-label">Showing 3 of 493 comments</div>
+          
+          <div class="comment catalyst">
+            
+            
+            
+            
+            <div class="catalyst-label">Conversation Catalyst</div>
+            
+            <div class="comment-meta">
+              <span>Hydroponic_Donut</span>
+              <span class="comment-score">&#9650; 1734</span>
+            </div>
+            <div class="comment-body">Honestly that&#39;s fine, the original was good and doesn&#39;t need to be messed with. It already was in the 2000s and that was awful.</div>
+          </div>
+          
+          <div class="comment">
+            
+            
+            
+            
+            <div class="comment-meta">
+              <span>trip6god</span>
+              <span class="comment-score">&#9650; 672</span>
+            </div>
+            <div class="comment-body">Never even heard about it til right now lol</div>
+          </div>
+          
+          <div class="comment">
+            
+            
+            
+            
+            <div class="comment-meta">
+              <span>xArbilx</span>
+              <span class="comment-score">&#9650; 410</span>
+            </div>
+            <div class="comment-body">Good. They wouldn&#39;t have had the gumption to do it properly anyways.</div>
+          </div>
+          
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1qngknn')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1qngknn')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1qngknn/paramount_cancels_ren_stimpy_reboot/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1qngknn', decodeURIComponent('Paramount%20Cancels%20%27Ren%20%26%20Stimpy%27%20Reboot'), 'https://www.reddit.com/r/television/comments/1qngknn/paramount_cancels_ren_stimpy_reboot/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post spoiler-post"
+         id="post-t3_1qnt9c5"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1qnt9c5"
+         data-title="John Locke&#39;s &#34;Lost&#34; Reveal On The Episode &#34;Walkabout&#34;"
+         data-url="https://www.reddit.com/r/television/comments/1qnt9c5/john_lockes_lost_reveal_on_the_episode_walkabout/"
+         data-comments="394">
+
+      
+      
+
+      
+      
+      <div class="spoiler-banner">
+        Warning: Spoilers
+        <span class="spoiler-toggle" onclick="toggleSpoiler(this)">Show anyway</span>
+      </div>
+      
+
+      <div class="spoiler-content">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1qnt9c5/john_lockes_lost_reveal_on_the_episode_walkabout/" target="_blank">John Locke&#39;s &#34;Lost&#34; Reveal On The Episode &#34;Walkabout&#34;</a>
+
+        <div class="post-meta">
+          <span>&#9650; 2043</span>
+
+          
+          
+          <span class="badge-comments badge-100">394</span>
+          
+
+          <span>by Laszl0Panaflex</span>
+
+          
+          
+          <span>15h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-positive">😍 Positive vibes</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comments-count-label">Showing 3 of 394 comments</div>
+          
+          <div class="comment catalyst">
+            
+            
+            
+            
+            <div class="catalyst-label">Conversation Catalyst</div>
+            
+            <div class="comment-meta">
+              <span>jackyLAD</span>
+              <span class="comment-score">&#9650; 1116</span>
+            </div>
+            <div class="comment-body">LOST came out firing to be fair. That pilot, then this as your fourth episode.... Locke&#39;s just outstanding.</div>
+          </div>
+          
+          <div class="comment">
+            
+            
+            
+            
+            <div class="comment-meta">
+              <span>GorillaJackson</span>
+              <span class="comment-score">&#9650; 528</span>
+            </div>
+            <div class="comment-body">Locke is an all time tragic character imo. Gotta rewatch Lost again soon</div>
+          </div>
+          
+          <div class="comment">
+            
+            
+            
+            
+            <div class="comment-meta">
+              <span>sketchy_ppl</span>
+              <span class="comment-score">&#9650; 331</span>
+            </div>
+            <div class="comment-body">I rewatched Lost last year. I think Terry O’Quinn as Locke and Michael Emerson as Ben are two very rare “they were born for that role” castings. 
+
+It’s a shame we will probably never get another TV watching experience like this again. Even if someone was crazy enough to watch one episode per week with longer breaks between each season, to try and replicate the original timing, they’d still be missing out on the speculation with friends, researching theories online, etc. It was a one-of-a-kind ex...</div>
+          </div>
+          
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1qnt9c5')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1qnt9c5')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1qnt9c5/john_lockes_lost_reveal_on_the_episode_walkabout/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1qnt9c5', decodeURIComponent('John%20Locke%27s%20%22Lost%22%20Reveal%20On%20The%20Episode%20%22Walkabout%22'), 'https://www.reddit.com/r/television/comments/1qnt9c5/john_lockes_lost_reveal_on_the_episode_walkabout/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1qnhhk2"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1qnhhk2"
+         data-title="The Daily Wire Is Now Making Fantasy Shows — And They Aren’t Very Good"
+         data-url="https://www.reddit.com/r/television/comments/1qnhhk2/the_daily_wire_is_now_making_fantasy_shows_and/"
+         data-comments="381">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1qnhhk2/the_daily_wire_is_now_making_fantasy_shows_and/" target="_blank">The Daily Wire Is Now Making Fantasy Shows — And They Aren’t Very Good</a>
+
+        <div class="post-meta">
+          <span>&#9650; 1094</span>
+
+          
+          
+          <span class="badge-comments badge-100">381</span>
+          
+
+          <span>by Gato1980</span>
+
+          
+          
+          <span>22h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-negative">😬 Critical reception</span>
+
+          
+          
+          <span class="consensus-badge consensus-divided">⚡ Divided Community (67% split)</span>
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comments-count-label">Showing 3 of 381 comments</div>
+          
+          <div class="comment catalyst">
+            
+            
+            
+            
+            <div class="catalyst-label">Conversation Catalyst</div>
+            
+            <div class="comment-meta">
+              <span>HtownSamson</span>
+              <span class="comment-score">&#9650; 1127</span>
+            </div>
+            <div class="comment-body">Pretty much everyone at the Daily Wire, Ben Shapiro on down, failed in some sort of way in Hollywood. They all want to be in entertainment so bad but their terrible taste and bad writings were rejected so they joined the right wing grift.</div>
+          </div>
+          
+          <div class="comment">
+            
+            
+            
+            
+            <div class="comment-meta">
+              <span>Pavlock</span>
+              <span class="comment-score">&#9650; 893</span>
+            </div>
+            <div class="comment-body">They&#39;ve always been making fantasy shows.  These are just the first ones with actual magic.</div>
+          </div>
+          
+          <div class="comment">
+            
+            
+            
+            
+            <div class="comment-meta">
+              <span>PhilhelmScream</span>
+              <span class="comment-score">&#9650; 280</span>
+            </div>
+            <div class="comment-body">No media they&#39;ve produced has been good. They&#39;re Hallmark for conservatives.</div>
+          </div>
+          
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1qnhhk2')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1qnhhk2')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1qnhhk2/the_daily_wire_is_now_making_fantasy_shows_and/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1qnhhk2', decodeURIComponent('The%20Daily%20Wire%20Is%20Now%20Making%20Fantasy%20Shows%20%E2%80%94%20And%20They%20Aren%E2%80%99t%20Very%20Good'), 'https://www.reddit.com/r/television/comments/1qnhhk2/the_daily_wire_is_now_making_fantasy_shows_and/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1qnmo8f"
+         data-flair=""
+         data-show-name="Fallout"
+         data-post-id="t3_1qnmo8f"
+         data-title="&#39;Fallout&#39; Season 2 Final Two Episodes Moved Up to Tuesday Nights (Jan 27 &amp; Feb 3 at 6PM PT)"
+         data-url="https://www.reddit.com/r/television/comments/1qnmo8f/fallout_season_2_final_two_episodes_moved_up_to/"
+         data-comments="313">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1qnmo8f/fallout_season_2_final_two_episodes_moved_up_to/" target="_blank">&#39;Fallout&#39; Season 2 Final Two Episodes Moved Up to Tuesday Nights (Jan 27 &amp; Feb 3 at 6PM PT)</a>
+
+        <div class="post-meta">
+          <span>&#9650; 2442</span>
+
+          
+          
+          <span class="badge-comments badge-100">313</span>
+          
+
+          <span>by MarvelsGrantMan136</span>
+
+          
+          
+          <span>19h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comments-count-label">Showing 3 of 313 comments</div>
+          
+          <div class="comment catalyst">
+            
+            
+            
+            
+            <div class="catalyst-label">Conversation Catalyst</div>
+            
+            <div class="comment-meta">
+              <span>LeftofCenter25</span>
+              <span class="comment-score">&#9650; 1146</span>
+            </div>
+            <div class="comment-body">I can’t believe there’s only two episodes left. This season flew by it seems, even with only the one episode a week.</div>
+          </div>
+          
+          <div class="comment">
+            
+            
+            
+            
+            <div class="comment-meta">
+              <span>NamesTheGame</span>
+              <span class="comment-score">&#9650; 251</span>
+            </div>
+            <div class="comment-body">I&#39;m pretty behind on this show, only watched the first episode of Season 2. How is the season shaping up?</div>
+          </div>
+          
+          <div class="comment">
+            
+            
+            
+            
+            <div class="comment-meta">
+              <span>randomnmbrgntr</span>
+              <span class="comment-score">&#9650; 234</span>
+            </div>
+            <div class="comment-body">Okie dokie</div>
+          </div>
+          
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1qnmo8f')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1qnmo8f')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1qnmo8f/fallout_season_2_final_two_episodes_moved_up_to/')">&#128279; Share</button>
+        
+        <button class="action-btn track-btn" data-show="Fallout" onclick="toggleTrack(this, 'Fallout')">&#9734; Track</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1qnmo8f', decodeURIComponent('%27Fallout%27%20Season%202%20Final%20Two%20Episodes%20Moved%20Up%20to%20Tuesday%20Nights%20%28Jan%2027%20%26%20Feb%203%20at%206PM%20PT%29'), 'https://www.reddit.com/r/television/comments/1qnmo8f/fallout_season_2_final_two_episodes_moved_up_to/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1qnnrk8"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1qnnrk8"
+         data-title="Just watched Episode 2 of A Knight of the Seven Kingdoms"
+         data-url="https://www.reddit.com/r/television/comments/1qnnrk8/just_watched_episode_2_of_a_knight_of_the_seven/"
+         data-comments="163">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1qnnrk8/just_watched_episode_2_of_a_knight_of_the_seven/" target="_blank">Just watched Episode 2 of A Knight of the Seven Kingdoms</a>
+
+        <div class="post-meta">
+          <span>&#9650; 445</span>
+
+          
+          
+          <span class="badge-comments badge-100">163</span>
+          
+
+          <span>by yournightagent</span>
+
+          
+          
+          <span>18h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-mixed">⚖️ Mixed reactions</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comments-count-label">Showing 3 of 163 comments</div>
+          
+          <div class="comment catalyst">
+            
+            
+            
+            
+            <div class="catalyst-label">Conversation Catalyst</div>
+            
+            <div class="comment-meta">
+              <span>pat_the_tree</span>
+              <span class="comment-score">&#9650; 469</span>
+            </div>
+            <div class="comment-body">Thats because the books its based on are a series of novellas following a single knight rather than a complicated show with politics. its a much sinpler life and i love it</div>
+          </div>
+          
+          <div class="comment">
+            
+            
+            
+            
+            <div class="comment-meta">
+              <span>United_Artichoke_466</span>
+              <span class="comment-score">&#9650; 85</span>
+            </div>
+            <div class="comment-body">It&#39;s based on a short story, they&#39;ve already added some stuff that wasn&#39;t in the books. It was always going to be short episodes - honestly, could&#39;ve been a movie. But it is very nice, funny, faithful to the source material.</div>
+          </div>
+          
+          <div class="comment">
+            
+            
+            
+            
+            <div class="comment-meta">
+              <span>adamtnewman</span>
+              <span class="comment-score">&#9650; 68</span>
+            </div>
+            <div class="comment-body">I&#39;m enjoying this show much more than HoTD.</div>
+          </div>
+          
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1qnnrk8')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1qnnrk8')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1qnnrk8/just_watched_episode_2_of_a_knight_of_the_seven/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1qnnrk8', decodeURIComponent('Just%20watched%20Episode%202%20of%20A%20Knight%20of%20the%20Seven%20Kingdoms'), 'https://www.reddit.com/r/television/comments/1qnnrk8/just_watched_episode_2_of_a_knight_of_the_seven/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1qoahmn"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1qoahmn"
+         data-title="Is the expanse worth watching?"
+         data-url="https://www.reddit.com/r/television/comments/1qoahmn/is_the_expanse_worth_watching/"
+         data-comments="131">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1qoahmn/is_the_expanse_worth_watching/" target="_blank">Is the expanse worth watching?</a>
+
+        <div class="post-meta">
+          <span>&#9650; 73</span>
+
+          
+          
+          <span class="badge-comments badge-100">131</span>
+          
+
+          <span>by Defiant-Ad7732</span>
+
+          
+          
+          <span>2h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-mixed">⚖️ Mixed reactions</span>
+
+          
+          
+          <span class="consensus-badge consensus-consensus">✅ Strong Consensus (75% alignment)</span>
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comments-count-label">Showing 3 of 131 comments</div>
+          
+          <div class="comment catalyst">
+            
+            
+            
+            
+            <div class="catalyst-label">Conversation Catalyst</div>
+            
+            <div class="comment-meta">
+              <span>meridius55</span>
+              <span class="comment-score">&#9650; 215</span>
+            </div>
+            <div class="comment-body">Yes.</div>
+          </div>
+          
+          <div class="comment">
+            
+            
+            
+            
+            <div class="comment-meta">
+              <span>perfectbebop</span>
+              <span class="comment-score">&#9650; 130</span>
+            </div>
+            <div class="comment-body">Posts like this kill me
+
+“I’ve heard nothing but great things…but I’m skeptical. I’ll ask the people who like it if it’s worth watching”</div>
+          </div>
+          
+          <div class="comment">
+            
+            
+            
+            
+            <div class="comment-meta">
+              <span>MoltenCopperEnema</span>
+              <span class="comment-score">&#9650; 71</span>
+            </div>
+            <div class="comment-body">Yes. Also worth reading.</div>
+          </div>
+          
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1qoahmn')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1qoahmn')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1qoahmn/is_the_expanse_worth_watching/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1qoahmn', decodeURIComponent('Is%20the%20expanse%20worth%20watching%3F'), 'https://www.reddit.com/r/television/comments/1qoahmn/is_the_expanse_worth_watching/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+
+    
+
+    
+    <div class="footer">
+      
+      <div class="impact">
+        This digest covers 3,256 comments &middot; filtered out 17 noise posts
+      </div>
+      
+      <div>Generated by <a href="#">The TV Signal</a> &middot; 2026-01-27 21:08:43 EST</div>
+      <div class="social-proof">Next digest: Tomorrow at 11 PM EST</div>
+    </div>
+
+    <script>
+    /* ================================================
+       Vanilla JS for all interactive features
+       localStorage-based, no dependencies
+       ================================================ */
+
+    // --- Utility ---
+    function getLS(key, def) {
+      try { var v = localStorage.getItem('tvs_' + key); return v ? JSON.parse(v) : def; }
+      catch(e) { return def; }
+    }
+    function setLS(key, val) {
+      try { localStorage.setItem('tvs_' + key, JSON.stringify(val)); } catch(e) {}
+    }
+
+    // --- #4 Smart Filtering ---
+    (function initFlairFilters() {
+      var flairs = new Set();
+      document.querySelectorAll('.post[data-flair]').forEach(function(p) {
+        var f = p.getAttribute('data-flair');
+        if (f) flairs.add(f);
+      });
+      var container = document.getElementById('flair-filters');
+      flairs.forEach(function(f) {
+        var btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.setAttribute('data-flair', f);
+        btn.textContent = f.charAt(0).toUpperCase() + f.slice(1);
+        btn.onclick = function() { filterByFlair(f); };
+        container.appendChild(btn);
+      });
+      // Restore saved filter
+      var saved = getLS('flair_filter', 'all');
+      if (saved !== 'all') filterByFlair(saved);
+    })();
+
+    function filterByFlair(flair) {
+      document.querySelectorAll('.filter-btn').forEach(function(b) {
+        b.classList.toggle('active', b.getAttribute('data-flair') === flair);
+      });
+      document.querySelectorAll('.post[data-flair]').forEach(function(p) {
+        if (flair === 'all' || p.getAttribute('data-flair') === flair) {
+          p.style.display = '';
+        } else {
+          p.style.display = 'none';
+        }
+      });
+      setLS('flair_filter', flair);
+    }
+
+    // --- #24 Difficulty Modes ---
+    (function initMode() {
+      var saved = getLS('read_mode', 'standard');
+      setMode(saved);
+    })();
+
+    function setMode(mode) {
+      document.querySelectorAll('.mode-btn').forEach(function(b) {
+        b.classList.toggle('active', b.getAttribute('data-mode') === mode);
+      });
+      document.body.classList.remove('mode-quick', 'mode-standard', 'mode-deep');
+      document.body.classList.add('mode-' + mode);
+      setLS('read_mode', mode);
+    }
+
+    // --- #8 Mark as Read ---
+    (function initRead() {
+      var read = getLS('read_posts', []);
+      read.forEach(function(id) {
+        var el = document.getElementById('post-' + id);
+        if (el) {
+          el.classList.add('read-post');
+          var btn = el.querySelector('.mark-read-btn');
+          if (btn) btn.classList.add('active');
+        }
+      });
+    })();
+
+    function markRead(btn, id) {
+      var read = getLS('read_posts', []);
+      var el = document.getElementById('post-' + id);
+      var idx = read.indexOf(id);
+      if (idx > -1) {
+        read.splice(idx, 1);
+        el.classList.remove('read-post');
+        btn.classList.remove('active');
+      } else {
+        read.push(id);
+        el.classList.add('read-post');
+        btn.classList.add('active');
+      }
+      setLS('read_posts', read);
+    }
+
+    // --- #8 Hide ---
+    (function initHidden() {
+      var hidden = getLS('hidden_posts', []);
+      hidden.forEach(function(id) {
+        var el = document.getElementById('post-' + id);
+        if (el) el.classList.add('hidden-post');
+      });
+    })();
+
+    function hidePost(btn, id) {
+      var hidden = getLS('hidden_posts', []);
+      if (hidden.indexOf(id) === -1) hidden.push(id);
+      setLS('hidden_posts', hidden);
+      var el = document.getElementById('post-' + id);
+      if (el) el.classList.add('hidden-post');
+    }
+
+    // --- #8 Share ---
+    function sharePost(url) {
+      if (navigator.share) {
+        navigator.share({ url: url });
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(url);
+      }
+    }
+
+    // --- #20 Spoiler Toggle ---
+    function toggleSpoiler(el) {
+      var content = el.closest('.spoiler-post').querySelector('.spoiler-content');
+      content.classList.toggle('revealed');
+      el.textContent = content.classList.contains('revealed') ? 'Hide' : 'Show anyway';
+    }
+
+    // --- #22 My Shows Tracking ---
+    (function initShows() {
+      var tracked = getLS('tracked_shows', []);
+      refreshShowsPanel(tracked);
+      // Highlight tracked and update buttons
+      document.querySelectorAll('.post[data-show-name]').forEach(function(p) {
+        var show = p.getAttribute('data-show-name');
+        if (show && tracked.indexOf(show) > -1) {
+          p.classList.add('tracked-show');
+          var btn = p.querySelector('.track-btn');
+          if (btn) { btn.classList.add('active'); btn.innerHTML = '&#9733; Tracked'; }
+        }
+      });
+    })();
+
+    function toggleTrack(btn, show) {
+      var tracked = getLS('tracked_shows', []);
+      var idx = tracked.indexOf(show);
+      if (idx > -1) {
+        tracked.splice(idx, 1);
+        btn.classList.remove('active');
+        btn.innerHTML = '&#9734; Track';
+        btn.closest('.post').classList.remove('tracked-show');
+      } else {
+        tracked.push(show);
+        btn.classList.add('active');
+        btn.innerHTML = '&#9733; Tracked';
+        btn.closest('.post').classList.add('tracked-show');
+      }
+      setLS('tracked_shows', tracked);
+      refreshShowsPanel(tracked);
+    }
+
+    function refreshShowsPanel(tracked) {
+      var panel = document.getElementById('my-shows-panel');
+      var list = document.getElementById('my-shows-list');
+      if (tracked.length === 0) { panel.classList.remove('visible'); return; }
+      panel.classList.add('visible');
+      list.innerHTML = '';
+      tracked.forEach(function(s) {
+        var tag = document.createElement('span');
+        tag.className = 'my-show-tag';
+        tag.textContent = s;
+        tag.onclick = function() { toggleTrack(null, s); refreshShowsPanel(getLS('tracked_shows', [])); };
+        list.appendChild(tag);
+      });
+    }
+
+    // --- #36 Bookmarks ---
+    (function initBookmarks() {
+      refreshBookmarksPanel();
+      var bookmarks = getLS('bookmarks', {});
+      Object.keys(bookmarks).forEach(function(id) {
+        var el = document.getElementById('post-' + id);
+        if (el) {
+          var btn = el.querySelector('.bookmark-btn');
+          if (btn) btn.classList.add('active');
+        }
+      });
+    })();
+
+    function toggleBookmark(btn, id, title, url) {
+      var bookmarks = getLS('bookmarks', {});
+      if (bookmarks[id]) {
+        delete bookmarks[id];
+        if (btn) btn.classList.remove('active');
+      } else {
+        bookmarks[id] = { title: title, url: url };
+        if (btn) btn.classList.add('active');
+      }
+      setLS('bookmarks', bookmarks);
+      refreshBookmarksPanel();
+    }
+
+    function refreshBookmarksPanel() {
+      var bookmarks = getLS('bookmarks', {});
+      var keys = Object.keys(bookmarks);
+      var panel = document.getElementById('bookmarks-panel');
+      var list = document.getElementById('bookmarks-list');
+      if (keys.length === 0) { panel.classList.remove('visible'); return; }
+      panel.classList.add('visible');
+      list.innerHTML = '';
+      keys.forEach(function(id) {
+        var a = document.createElement('a');
+        a.href = bookmarks[id].url;
+        a.target = '_blank';
+        a.textContent = bookmarks[id].title;
+        list.appendChild(a);
+      });
+    }
+
+    function exportBookmarks() {
+      var bookmarks = getLS('bookmarks', {});
+      var csv = 'Title,URL\n';
+      Object.keys(bookmarks).forEach(function(id) {
+        csv += '"' + bookmarks[id].title.replace(/"/g, '""') + '","' + bookmarks[id].url + '"\n';
+      });
+      var blob = new Blob([csv], { type: 'text/csv' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'tv_signal_bookmarks.csv';
+      a.click();
+    }
+    </script>
+  </body>
+</html>
