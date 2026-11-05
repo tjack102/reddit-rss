@@ -10,17 +10,18 @@ Agentic RSS digest system for /r/television.
 - Schedule: Daily 11 PM EST
 
 ## Last Run
-- Date: 2026-11-04T11:40:38.095635
+- Date: 2026-11-05T11:41:05.719845
 - Posts fetched: 100
-- Posts after dedup: 60
-- Posts after filter: 51
-- Posts in digest: 51
-- Comments fetched: 0/51
+- Posts after dedup: 42
+- Posts after filter: 34
+- Posts in digest: 34
+- Comments fetched: 0/34
 - Degraded mode: yes
-- Runtime: 117.33s
+- Runtime: 85.43s
 - Status: partial
 
 ## Run History
+- 2026-11-05 11:42 | 34 posts | 85.43s | partial
 - 2026-11-04 11:42 | 51 posts | 117.33s | partial
 - 2026-11-02 11:45 | 15 posts | 46.79s | partial
 - 2026-11-01 10:53 | 38 posts | 90.34s | partial
@@ -50,4 +51,3 @@ Agentic RSS digest system for /r/television.
 - 2026-10-08 11:00 | 23 posts | 67.52s | partial
 - 2026-10-07 10:40 | 41 posts | 100.67s | partial
 - 2026-10-06 10:52 | 35 posts | 86.86s | partial
-- 2026-10-05 10:57 | 31 posts | 78.89s | partial
