@@ -1,0 +1,2576 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The TV Signal — Monday, November 09, 2026</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: #e0e0e0;
+        background: #0d1117;
+        padding: 16px;
+        max-width: 720px;
+        margin: 0 auto;
+      }
+
+      /* --- Header --- */
+      .header {
+        text-align: center;
+        padding: 32px 0 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        margin-bottom: 24px;
+      }
+      .header h1 {
+        font-size: 32px;
+        font-weight: 800;
+        color: #fff;
+        letter-spacing: -0.5px;
+      }
+      .header .tagline {
+        font-size: 12px;
+        color: #6b7280;
+        margin-top: 4px;
+        font-style: italic;
+      }
+      .header .date {
+        font-size: 14px;
+        color: #9ca3af;
+        margin-top: 8px;
+      }
+      .header .last-updated {
+        font-size: 11px;
+        color: #6b7280;
+        margin-top: 2px;
+      }
+
+      /* --- Stats Dashboard (#6) --- */
+      .stats-dashboard {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin-bottom: 24px;
+        backdrop-filter: blur(10px);
+      }
+      .stats-dashboard h3 {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #6b7280;
+        margin-bottom: 12px;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .stat-item {
+        background: rgba(255,255,255,0.03);
+        border-radius: 8px;
+        padding: 10px 12px;
+      }
+      .stat-value {
+        font-size: 22px;
+        font-weight: 700;
+        color: #fff;
+      }
+      .stat-label {
+        font-size: 11px;
+        color: #6b7280;
+        margin-top: 2px;
+      }
+      .stat-hottest {
+        grid-column: 1 / -1;
+        font-size: 12px;
+        color: #9ca3af;
+        padding: 8px 12px;
+        background: rgba(255,255,255,0.03);
+        border-radius: 8px;
+      }
+      .stat-hottest strong { color: #f59e0b; }
+
+      /* --- Controls bar (#4, #24) --- */
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+        align-items: center;
+      }
+      .controls-section {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .controls-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #6b7280;
+        margin-right: 4px;
+      }
+      .filter-btn, .mode-btn {
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: #9ca3af;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .filter-btn:hover, .mode-btn:hover {
+        background: rgba(255,255,255,0.1);
+        color: #e0e0e0;
+      }
+      .filter-btn.active, .mode-btn.active {
+        background: rgba(99,102,241,0.2);
+        border-color: rgba(99,102,241,0.4);
+        color: #a5b4fc;
+      }
+
+      /* --- My Shows panel (#22) --- */
+      .my-shows-panel {
+        background: rgba(251,191,36,0.06);
+        border: 1px solid rgba(251,191,36,0.15);
+        border-radius: 12px;
+        padding: 14px 18px;
+        margin-bottom: 20px;
+        display: none;
+      }
+      .my-shows-panel.visible { display: block; }
+      .my-shows-panel h3 {
+        font-size: 13px;
+        color: #fbbf24;
+        margin-bottom: 8px;
+      }
+      .my-shows-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .my-show-tag {
+        background: rgba(251,191,36,0.12);
+        border: 1px solid rgba(251,191,36,0.2);
+        color: #fbbf24;
+        padding: 2px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+        cursor: pointer;
+      }
+      .my-show-tag:hover { background: rgba(251,191,36,0.2); }
+
+      /* --- Bookmarks panel (#36) --- */
+      .bookmarks-panel {
+        background: rgba(99,102,241,0.06);
+        border: 1px solid rgba(99,102,241,0.15);
+        border-radius: 12px;
+        padding: 14px 18px;
+        margin-bottom: 20px;
+        display: none;
+      }
+      .bookmarks-panel.visible { display: block; }
+      .bookmarks-panel h3 {
+        font-size: 13px;
+        color: #a5b4fc;
+        margin-bottom: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .bookmark-export-btn {
+        font-size: 11px;
+        background: rgba(99,102,241,0.15);
+        border: 1px solid rgba(99,102,241,0.3);
+        color: #a5b4fc;
+        padding: 2px 10px;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+      .bookmarks-list { font-size: 13px; }
+      .bookmarks-list a {
+        color: #a5b4fc;
+        text-decoration: none;
+        display: block;
+        padding: 4px 0;
+      }
+      .bookmarks-list a:hover { color: #c4b5fd; }
+
+      /* --- Degraded notice --- */
+      .degraded-notice {
+        background: rgba(251,191,36,0.1);
+        border: 1px solid rgba(251,191,36,0.3);
+        border-radius: 10px;
+        padding: 12px 16px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        color: #fbbf24;
+      }
+
+      /* --- Post cards --- */
+      .post {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 14px;
+        padding: 20px;
+        margin-bottom: 20px;
+        backdrop-filter: blur(10px);
+        transition: border-color 0.2s;
+        position: relative;
+      }
+      .post:hover { border-color: rgba(255,255,255,0.15); }
+      .post.tracked-show { border-left: 3px solid #fbbf24; }
+      .post.read-post { opacity: 0.45; }
+      .post.read-post .post-title { text-decoration: line-through; }
+      .post.hidden-post { display: none; }
+
+      /* Spoiler blur (#20) */
+      .post.spoiler-post .spoiler-content { filter: blur(6px); transition: filter 0.3s; }
+      .post.spoiler-post .spoiler-content.revealed { filter: none; }
+      .spoiler-banner {
+        background: rgba(239,68,68,0.15);
+        border: 1px solid rgba(239,68,68,0.3);
+        color: #fca5a5;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .spoiler-toggle {
+        font-size: 11px;
+        color: #9ca3af;
+        cursor: pointer;
+        margin-left: 8px;
+        text-decoration: underline;
+      }
+
+      /* Trending badge (#3) */
+      .trending-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: rgba(239,68,68,0.15);
+        border: 1px solid rgba(239,68,68,0.3);
+        color: #fca5a5;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 2px 10px;
+        border-radius: 12px;
+        animation: pulse-badge 2s infinite;
+        margin-bottom: 8px;
+      }
+      @keyframes pulse-badge {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.6; }
+      }
+
+      .post-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #fff;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 8px;
+        line-height: 1.3;
+      }
+      .post-title:hover { color: #a5b4fc; }
+
+      .post-meta {
+        font-size: 13px;
+        color: #6b7280;
+        margin-bottom: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* Comment count badges (#1) */
+      .badge-comments {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        padding: 1px 8px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 12px;
+      }
+      .badge-500 { background: rgba(239,68,68,0.2); color: #fca5a5; }
+      .badge-100 { background: rgba(249,115,22,0.2); color: #fdba74; }
+      .badge-50  { background: rgba(59,130,246,0.2); color: #93c5fd; }
+
+      /* Flair tags (#1) */
+      .flair {
+        display: inline-block;
+        background: rgba(99,102,241,0.15);
+        color: #a5b4fc;
+        padding: 1px 10px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 500;
+        border: 1px solid rgba(99,102,241,0.25);
+      }
+
+      /* Sentiment badge (#7) */
+      .sentiment-badge {
+        font-size: 11px;
+        padding: 1px 8px;
+        border-radius: 10px;
+        font-weight: 500;
+      }
+      .sentiment-positive { background: rgba(34,197,94,0.15); color: #86efac; }
+      .sentiment-negative { background: rgba(239,68,68,0.15); color: #fca5a5; }
+      .sentiment-mixed    { background: rgba(249,115,22,0.15); color: #fdba74; }
+      .sentiment-neutral   { background: rgba(107,114,128,0.15); color: #9ca3af; }
+
+      /* Consensus badge (#26) */
+      .consensus-badge {
+        font-size: 11px;
+        padding: 1px 8px;
+        border-radius: 10px;
+        font-weight: 500;
+      }
+      .consensus-consensus { background: rgba(34,197,94,0.15); color: #86efac; }
+      .consensus-divided   { background: rgba(249,115,22,0.15); color: #fdba74; }
+
+      /* Reading time (#23) */
+      .reading-time {
+        font-size: 11px;
+        color: #6b7280;
+      }
+
+      /* Action buttons (#8) */
+      .post-actions {
+        display: flex;
+        gap: 6px;
+        margin-top: 12px;
+      }
+      .action-btn {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: #6b7280;
+        padding: 4px 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .action-btn:hover { background: rgba(255,255,255,0.1); color: #e0e0e0; }
+      .action-btn.active { color: #a5b4fc; border-color: rgba(99,102,241,0.3); }
+      .track-btn.active { color: #fbbf24; border-color: rgba(251,191,36,0.3); }
+
+      /* --- Comments section (#2) --- */
+      .comments-section {
+        border-top: 1px solid rgba(255,255,255,0.06);
+        padding-top: 14px;
+        margin-top: 14px;
+      }
+      .comments-count-label {
+        font-size: 11px;
+        color: #6b7280;
+        margin-bottom: 10px;
+      }
+
+      .comment {
+        padding: 10px 14px;
+        border-left: 3px solid rgba(99,102,241,0.4);
+        margin-bottom: 10px;
+        font-size: 14px;
+        background: rgba(255,255,255,0.02);
+        border-radius: 0 8px 8px 0;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      }
+      .comment-meta {
+        font-size: 12px;
+        color: #6b7280;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .comment-score { color: #86efac; }
+      .comment-body {
+        color: #d1d5db;
+        word-wrap: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      /* Catalyst comment (#19) */
+      .comment.catalyst {
+        border-left-color: #fbbf24;
+        background: rgba(251,191,36,0.04);
+      }
+      .catalyst-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: #fbbf24;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-bottom: 4px;
+      }
+
+      /* Creator comment (#34) */
+      .comment.creator {
+        border-left-color: #a855f7;
+        background: rgba(168,85,247,0.06);
+      }
+      .creator-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: #a855f7;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-bottom: 4px;
+      }
+
+      /* --- Footer --- */
+      .footer {
+        text-align: center;
+        padding: 28px 0 16px;
+        font-size: 12px;
+        color: #4b5563;
+        border-top: 1px solid rgba(255,255,255,0.06);
+        margin-top: 8px;
+      }
+      .footer a { color: #6b7280; text-decoration: none; }
+      .footer a:hover { color: #9ca3af; }
+      .footer .impact {
+        font-size: 11px;
+        color: #4b5563;
+        margin-bottom: 12px;
+        line-height: 1.6;
+      }
+      .footer .social-proof {
+        font-size: 11px;
+        color: #4b5563;
+        margin-top: 8px;
+      }
+
+      /* --- Difficulty modes (#24) --- */
+      .mode-quick .comment:nth-child(n+2) { display: none; }
+      .mode-quick .comment-body { -webkit-line-clamp: 2; }
+      .mode-deep .comment-body { -webkit-line-clamp: unset; overflow: visible; }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>The TV Signal</h1>
+      <div class="tagline">Cutting through Reddit's noise since January 2026</div>
+      <div class="date">Monday, November 09, 2026</div>
+      <div class="last-updated">Last updated 2026-11-09 12:17:14 EST</div>
+    </div>
+
+    
+    <div class="degraded-notice">
+      Warning: Comments are temporarily unavailable. This digest shows thread metadata only. Normal service will resume with the next run.
+    </div>
+    
+
+    
+    
+    <div class="stats-dashboard">
+      <h3>Today's Digest</h3>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-value">27</div>
+          <div class="stat-label">Discussions found</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">0</div>
+          <div class="stat-label">Total comments</div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-value">73</div>
+          <div class="stat-label">Noise posts filtered</div>
+        </div>
+        
+        
+        <div class="stat-hottest">
+          Hottest: <strong>Andor Season 2 | Mon Mothma&#39;s Senate Speech</strong> (0 comments)
+        </div>
+        
+      </div>
+    </div>
+    
+
+    
+    <div class="controls">
+      <div class="controls-section" id="flair-filters">
+        <span class="controls-label">Filter:</span>
+        <button class="filter-btn active" data-flair="all" onclick="filterByFlair('all')">All</button>
+      </div>
+      <div class="controls-section">
+        <span class="controls-label">Mode:</span>
+        <button class="mode-btn" data-mode="quick" onclick="setMode('quick')">Quick Hits</button>
+        <button class="mode-btn active" data-mode="standard" onclick="setMode('standard')">Standard</button>
+        <button class="mode-btn" data-mode="deep" onclick="setMode('deep')">Deep Dive</button>
+      </div>
+    </div>
+
+    
+    <div class="my-shows-panel" id="my-shows-panel">
+      <h3>My Shows</h3>
+      <div class="my-shows-list" id="my-shows-list"></div>
+    </div>
+
+    
+    <div class="bookmarks-panel" id="bookmarks-panel">
+      <h3>
+        <span>Bookmarks</span>
+        <button class="bookmark-export-btn" onclick="exportBookmarks()">Export CSV</button>
+      </h3>
+      <div class="bookmarks-list" id="bookmarks-list"></div>
+    </div>
+
+    
+    
+    <div class="post"
+         id="post-t3_1xrgam2"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xrgam2"
+         data-title="Andor Season 2 | Mon Mothma&#39;s Senate Speech"
+         data-url="https://www.reddit.com/r/television/comments/1xrgam2/andor_season_2_mon_mothmas_senate_speech/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xrgam2/andor_season_2_mon_mothmas_senate_speech/" target="_blank">Andor Season 2 | Mon Mothma&#39;s Senate Speech</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by PetyrDayne</span>
+
+          
+          
+          <span>9h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xrgam2')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xrgam2')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xrgam2/andor_season_2_mon_mothmas_senate_speech/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xrgam2', decodeURIComponent('Andor%20Season%202%20%7C%20Mon%20Mothma%27s%20Senate%20Speech'), 'https://www.reddit.com/r/television/comments/1xrgam2/andor_season_2_mon_mothmas_senate_speech/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xri24s"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xri24s"
+         data-title="Midterm Results and Pete Hegseth: 11/8/26 Last Week Tonight"
+         data-url="https://www.reddit.com/r/television/comments/1xri24s/midterm_results_and_pete_hegseth_11826_last_week/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xri24s/midterm_results_and_pete_hegseth_11826_last_week/" target="_blank">Midterm Results and Pete Hegseth: 11/8/26 Last Week Tonight</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by TheRealOcsiban</span>
+
+          
+          
+          <span>8h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xri24s')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xri24s')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xri24s/midterm_results_and_pete_hegseth_11826_last_week/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xri24s', decodeURIComponent('Midterm%20Results%20and%20Pete%20Hegseth%3A%2011/8/26%20Last%20Week%20Tonight'), 'https://www.reddit.com/r/television/comments/1xri24s/midterm_results_and_pete_hegseth_11826_last_week/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xrfw6z"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xrfw6z"
+         data-title="DOJ Says Competition Harms &#34;Unlikely&#34; From Fox-Roku Merger"
+         data-url="https://www.reddit.com/r/television/comments/1xrfw6z/doj_says_competition_harms_unlikely_from_foxroku/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xrfw6z/doj_says_competition_harms_unlikely_from_foxroku/" target="_blank">DOJ Says Competition Harms &#34;Unlikely&#34; From Fox-Roku Merger</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by OverPotato2322</span>
+
+          
+          
+          <span>9h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xrfw6z')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xrfw6z')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xrfw6z/doj_says_competition_harms_unlikely_from_foxroku/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xrfw6z', decodeURIComponent('DOJ%20Says%20Competition%20Harms%20%22Unlikely%22%20From%20Fox-Roku%20Merger'), 'https://www.reddit.com/r/television/comments/1xrfw6z/doj_says_competition_harms_unlikely_from_foxroku/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xr4ydp"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xr4ydp"
+         data-title="Season 13, Episode 13 of American Horror Story is officially the lowest-rated episode of any American scripted TV show with at least 1,000 IMDb ratings."
+         data-url="https://www.reddit.com/r/television/comments/1xr4ydp/season_13_episode_13_of_american_horror_story_is/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xr4ydp/season_13_episode_13_of_american_horror_story_is/" target="_blank">Season 13, Episode 13 of American Horror Story is officially the lowest-rated episode of any American scripted TV show with at least 1,000 IMDb ratings.</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by prolelol</span>
+
+          
+          
+          <span>18h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xr4ydp')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xr4ydp')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xr4ydp/season_13_episode_13_of_american_horror_story_is/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xr4ydp', decodeURIComponent('Season%2013%2C%20Episode%2013%20of%20American%20Horror%20Story%20is%20officially%20the%20lowest-rated%20episode%20of%20any%20American%20scripted%20TV%20show%20with%20at%20least%201%2C000%20IMDb%20ratings.'), 'https://www.reddit.com/r/television/comments/1xr4ydp/season_13_episode_13_of_american_horror_story_is/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xrlh7p"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xrlh7p"
+         data-title="Pete Hegseth: Last Week Tonight with John Oliver (HBO)"
+         data-url="https://www.reddit.com/r/television/comments/1xrlh7p/pete_hegseth_last_week_tonight_with_john_oliver/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xrlh7p/pete_hegseth_last_week_tonight_with_john_oliver/" target="_blank">Pete Hegseth: Last Week Tonight with John Oliver (HBO)</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by BadgercIops</span>
+
+          
+          
+          <span>4h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xrlh7p')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xrlh7p')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xrlh7p/pete_hegseth_last_week_tonight_with_john_oliver/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xrlh7p', decodeURIComponent('Pete%20Hegseth%3A%20Last%20Week%20Tonight%20with%20John%20Oliver%20%28HBO%29'), 'https://www.reddit.com/r/television/comments/1xrlh7p/pete_hegseth_last_week_tonight_with_john_oliver/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post spoiler-post"
+         id="post-t3_1xrhzzp"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xrhzzp"
+         data-title="Michael C. Hall Reveals The Subtle Way Dexter Makes Audiences Cheer For His Serial Killer"
+         data-url="https://www.reddit.com/r/television/comments/1xrhzzp/michael_c_hall_reveals_the_subtle_way_dexter/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+      <div class="spoiler-banner">
+        Warning: Spoilers
+        <span class="spoiler-toggle" onclick="toggleSpoiler(this)">Show anyway</span>
+      </div>
+      
+
+      <div class="spoiler-content">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xrhzzp/michael_c_hall_reveals_the_subtle_way_dexter/" target="_blank">Michael C. Hall Reveals The Subtle Way Dexter Makes Audiences Cheer For His Serial Killer</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by lordorangechain</span>
+
+          
+          
+          <span>8h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xrhzzp')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xrhzzp')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xrhzzp/michael_c_hall_reveals_the_subtle_way_dexter/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xrhzzp', decodeURIComponent('Michael%20C.%20Hall%20Reveals%20The%20Subtle%20Way%20Dexter%20Makes%20Audiences%20Cheer%20For%20His%20Serial%20Killer'), 'https://www.reddit.com/r/television/comments/1xrhzzp/michael_c_hall_reveals_the_subtle_way_dexter/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xrnlrf"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xrnlrf"
+         data-title="What is your least favorite plot in your favorite show?"
+         data-url="https://www.reddit.com/r/television/comments/1xrnlrf/what_is_your_least_favorite_plot_in_your_favorite/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xrnlrf/what_is_your_least_favorite_plot_in_your_favorite/" target="_blank">What is your least favorite plot in your favorite show?</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by adamsandwich</span>
+
+          
+          
+          <span>2h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xrnlrf')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xrnlrf')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xrnlrf/what_is_your_least_favorite_plot_in_your_favorite/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xrnlrf', decodeURIComponent('What%20is%20your%20least%20favorite%20plot%20in%20your%20favorite%20show%3F'), 'https://www.reddit.com/r/television/comments/1xrnlrf/what_is_your_least_favorite_plot_in_your_favorite/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xqx82y"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xqx82y"
+         data-title="The Leftovers - The Departure"
+         data-url="https://www.reddit.com/r/television/comments/1xqx82y/the_leftovers_the_departure/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xqx82y/the_leftovers_the_departure/" target="_blank">The Leftovers - The Departure</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by FudgeAllOfYous</span>
+
+          
+          
+          <span>23h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xqx82y')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xqx82y')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xqx82y/the_leftovers_the_departure/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xqx82y', decodeURIComponent('The%20Leftovers%20-%20The%20Departure'), 'https://www.reddit.com/r/television/comments/1xqx82y/the_leftovers_the_departure/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xr2yei"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xr2yei"
+         data-title="Forever (2014) is a single season show about an immortal crime solving medical examiner that should&#39;ve had a longer run"
+         data-url="https://www.reddit.com/r/television/comments/1xr2yei/forever_2014_is_a_single_season_show_about_an/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xr2yei/forever_2014_is_a_single_season_show_about_an/" target="_blank">Forever (2014) is a single season show about an immortal crime solving medical examiner that should&#39;ve had a longer run</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by KneeHighMischief</span>
+
+          
+          
+          <span>19h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xr2yei')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xr2yei')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xr2yei/forever_2014_is_a_single_season_show_about_an/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xr2yei', decodeURIComponent('Forever%20%282014%29%20is%20a%20single%20season%20show%20about%20an%20immortal%20crime%20solving%20medical%20examiner%20that%20should%27ve%20had%20a%20longer%20run'), 'https://www.reddit.com/r/television/comments/1xr2yei/forever_2014_is_a_single_season_show_about_an/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xqwt5s"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xqwt5s"
+         data-title="Weekend Update: Democrats Win Control of Congress, Trump Blames Poor Quality GOP Candidates - SNL"
+         data-url="https://www.reddit.com/r/television/comments/1xqwt5s/weekend_update_democrats_win_control_of_congress/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xqwt5s/weekend_update_democrats_win_control_of_congress/" target="_blank">Weekend Update: Democrats Win Control of Congress, Trump Blames Poor Quality GOP Candidates - SNL</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by ControlCAD</span>
+
+          
+          
+          <span>yesterday</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xqwt5s')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xqwt5s')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xqwt5s/weekend_update_democrats_win_control_of_congress/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xqwt5s', decodeURIComponent('Weekend%20Update%3A%20Democrats%20Win%20Control%20of%20Congress%2C%20Trump%20Blames%20Poor%20Quality%20GOP%20Candidates%20-%20SNL'), 'https://www.reddit.com/r/television/comments/1xqwt5s/weekend_update_democrats_win_control_of_congress/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xrptoz"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xrptoz"
+         data-title="What show started off well then ended badly in just the first season?"
+         data-url="https://www.reddit.com/r/television/comments/1xrptoz/what_show_started_off_well_then_ended_badly_in/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xrptoz/what_show_started_off_well_then_ended_badly_in/" target="_blank">What show started off well then ended badly in just the first season?</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by KPW-Higgins</span>
+
+          
+          
+          <span>just now</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xrptoz')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xrptoz')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xrptoz/what_show_started_off_well_then_ended_badly_in/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xrptoz', decodeURIComponent('What%20show%20started%20off%20well%20then%20ended%20badly%20in%20just%20the%20first%20season%3F'), 'https://www.reddit.com/r/television/comments/1xrptoz/what_show_started_off_well_then_ended_badly_in/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xqynj7"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xqynj7"
+         data-title="What do you think of the BBC show SAS Rogue Heroes ?"
+         data-url="https://www.reddit.com/r/television/comments/1xqynj7/what_do_you_think_of_the_bbc_show_sas_rogue_heroes/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xqynj7/what_do_you_think_of_the_bbc_show_sas_rogue_heroes/" target="_blank">What do you think of the BBC show SAS Rogue Heroes ?</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by CJ-GOTfan649</span>
+
+          
+          
+          <span>22h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xqynj7')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xqynj7')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xqynj7/what_do_you_think_of_the_bbc_show_sas_rogue_heroes/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xqynj7', decodeURIComponent('What%20do%20you%20think%20of%20the%20BBC%20show%20SAS%20Rogue%20Heroes%20%3F'), 'https://www.reddit.com/r/television/comments/1xqynj7/what_do_you_think_of_the_bbc_show_sas_rogue_heroes/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xqot3k"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xqot3k"
+         data-title="Today is the 51st anniversary of the release of Wonder Woman starring Lynda Carter, which lasted 3 seasons and 60 episodes"
+         data-url="https://www.reddit.com/r/television/comments/1xqot3k/today_is_the_51st_anniversary_of_the_release_of/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xqot3k/today_is_the_51st_anniversary_of_the_release_of/" target="_blank">Today is the 51st anniversary of the release of Wonder Woman starring Lynda Carter, which lasted 3 seasons and 60 episodes</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by preguntontas</span>
+
+          
+          
+          <span>yesterday</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xqot3k')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xqot3k')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xqot3k/today_is_the_51st_anniversary_of_the_release_of/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xqot3k', decodeURIComponent('Today%20is%20the%2051st%20anniversary%20of%20the%20release%20of%20Wonder%20Woman%20starring%20Lynda%20Carter%2C%20which%20lasted%203%20seasons%20and%2060%20episodes'), 'https://www.reddit.com/r/television/comments/1xqot3k/today_is_the_51st_anniversary_of_the_release_of/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xrofh1"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xrofh1"
+         data-title="I have noticed a lot recently that people claim pretty much every new show is second screen writing after that netflix article came out even when its not."
+         data-url="https://www.reddit.com/r/television/comments/1xrofh1/i_have_noticed_a_lot_recently_that_people_claim/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xrofh1/i_have_noticed_a_lot_recently_that_people_claim/" target="_blank">I have noticed a lot recently that people claim pretty much every new show is second screen writing after that netflix article came out even when its not.</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by JamStan1978</span>
+
+          
+          
+          <span>1h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xrofh1')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xrofh1')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xrofh1/i_have_noticed_a_lot_recently_that_people_claim/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xrofh1', decodeURIComponent('I%20have%20noticed%20a%20lot%20recently%20that%20people%20claim%20pretty%20much%20every%20new%20show%20is%20second%20screen%20writing%20after%20that%20netflix%20article%20came%20out%20even%20when%20its%20not.'), 'https://www.reddit.com/r/television/comments/1xrofh1/i_have_noticed_a_lot_recently_that_people_claim/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xrox5u"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xrox5u"
+         data-title="Today&#39;s Realism"
+         data-url="https://www.reddit.com/r/television/comments/1xrox5u/todays_realism/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xrox5u/todays_realism/" target="_blank">Today&#39;s Realism</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by fatman003</span>
+
+          
+          
+          <span>1h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xrox5u')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xrox5u')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xrox5u/todays_realism/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xrox5u', decodeURIComponent('Today%27s%20Realism'), 'https://www.reddit.com/r/television/comments/1xrox5u/todays_realism/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xrgpb3"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xrgpb3"
+         data-title="Police + superpowers please?"
+         data-url="https://www.reddit.com/r/television/comments/1xrgpb3/police_superpowers_please/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xrgpb3/police_superpowers_please/" target="_blank">Police + superpowers please?</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by sadox55</span>
+
+          
+          
+          <span>9h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xrgpb3')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xrgpb3')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xrgpb3/police_superpowers_please/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xrgpb3', decodeURIComponent('Police%20%2B%20superpowers%20please%3F'), 'https://www.reddit.com/r/television/comments/1xrgpb3/police_superpowers_please/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xrft36"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xrft36"
+         data-title="Paramount+ must watches"
+         data-url="https://www.reddit.com/r/television/comments/1xrft36/paramount_must_watches/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xrft36/paramount_must_watches/" target="_blank">Paramount+ must watches</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by heiney_luvr</span>
+
+          
+          
+          <span>9h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xrft36')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xrft36')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xrft36/paramount_must_watches/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xrft36', decodeURIComponent('Paramount%2B%20must%20watches'), 'https://www.reddit.com/r/television/comments/1xrft36/paramount_must_watches/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xrn79e"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xrn79e"
+         data-title="The absolute HYPOCRISY of Kaley Cuoco’s vanity projects: How MGM+&#39;s &#34;Vanished&#34; completely wasted Sam Claflin to serve a garbage double standard."
+         data-url="https://www.reddit.com/r/television/comments/1xrn79e/the_absolute_hypocrisy_of_kaley_cuocos_vanity/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xrn79e/the_absolute_hypocrisy_of_kaley_cuocos_vanity/" target="_blank">The absolute HYPOCRISY of Kaley Cuoco’s vanity projects: How MGM+&#39;s &#34;Vanished&#34; completely wasted Sam Claflin to serve a garbage double standard.</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by Fanfictioner8</span>
+
+          
+          
+          <span>2h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xrn79e')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xrn79e')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xrn79e/the_absolute_hypocrisy_of_kaley_cuocos_vanity/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xrn79e', decodeURIComponent('The%20absolute%20HYPOCRISY%20of%20Kaley%20Cuoco%E2%80%99s%20vanity%20projects%3A%20How%20MGM%2B%27s%20%22Vanished%22%20completely%20wasted%20Sam%20Claflin%20to%20serve%20a%20garbage%20double%20standard.'), 'https://www.reddit.com/r/television/comments/1xrn79e/the_absolute_hypocrisy_of_kaley_cuocos_vanity/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xr6g1s"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xr6g1s"
+         data-title="SWAT: Exiles versus SWAT? Is it worth checking out?"
+         data-url="https://www.reddit.com/r/television/comments/1xr6g1s/swat_exiles_versus_swat_is_it_worth_checking_out/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xr6g1s/swat_exiles_versus_swat_is_it_worth_checking_out/" target="_blank">SWAT: Exiles versus SWAT? Is it worth checking out?</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by AndrewHeard</span>
+
+          
+          
+          <span>17h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xr6g1s')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xr6g1s')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xr6g1s/swat_exiles_versus_swat_is_it_worth_checking_out/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xr6g1s', decodeURIComponent('SWAT%3A%20Exiles%20versus%20SWAT%3F%20Is%20it%20worth%20checking%20out%3F'), 'https://www.reddit.com/r/television/comments/1xr6g1s/swat_exiles_versus_swat_is_it_worth_checking_out/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xr6oir"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xr6oir"
+         data-title="I’m disappointed in this current Animation Domination lineup"
+         data-url="https://www.reddit.com/r/television/comments/1xr6oir/im_disappointed_in_this_current_animation/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xr6oir/im_disappointed_in_this_current_animation/" target="_blank">I’m disappointed in this current Animation Domination lineup</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by Southern-Train7142</span>
+
+          
+          
+          <span>16h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xr6oir')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xr6oir')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xr6oir/im_disappointed_in_this_current_animation/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xr6oir', decodeURIComponent('I%E2%80%99m%20disappointed%20in%20this%20current%20Animation%20Domination%20lineup'), 'https://www.reddit.com/r/television/comments/1xr6oir/im_disappointed_in_this_current_animation/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xrg7eu"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xrg7eu"
+         data-title="‘SNL’: Druski Dons Whiteface as Elizabeth Holmes in ‘You Can See Everything’ Parody"
+         data-url="https://www.reddit.com/r/television/comments/1xrg7eu/snl_druski_dons_whiteface_as_elizabeth_holmes_in/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xrg7eu/snl_druski_dons_whiteface_as_elizabeth_holmes_in/" target="_blank">‘SNL’: Druski Dons Whiteface as Elizabeth Holmes in ‘You Can See Everything’ Parody</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by Top_Report_4895</span>
+
+          
+          
+          <span>9h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xrg7eu')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xrg7eu')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xrg7eu/snl_druski_dons_whiteface_as_elizabeth_holmes_in/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xrg7eu', decodeURIComponent('%E2%80%98SNL%E2%80%99%3A%20Druski%20Dons%20Whiteface%20as%20Elizabeth%20Holmes%20in%20%E2%80%98You%20Can%20See%20Everything%E2%80%99%20Parody'), 'https://www.reddit.com/r/television/comments/1xrg7eu/snl_druski_dons_whiteface_as_elizabeth_holmes_in/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xr7mfh"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xr7mfh"
+         data-title="Nocturne Apple TV+"
+         data-url="https://www.reddit.com/r/television/comments/1xr7mfh/nocturne_apple_tv/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xr7mfh/nocturne_apple_tv/" target="_blank">Nocturne Apple TV+</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by MamaMia1325</span>
+
+          
+          
+          <span>16h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xr7mfh')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xr7mfh')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xr7mfh/nocturne_apple_tv/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xr7mfh', decodeURIComponent('Nocturne%20Apple%20TV%2B'), 'https://www.reddit.com/r/television/comments/1xr7mfh/nocturne_apple_tv/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post spoiler-post"
+         id="post-t3_1xr6ys3"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xr6ys3"
+         data-title="Squid Game ending with multiple survivor&#39;s would&#39;ve been a far more interesting ending than what we got"
+         data-url="https://www.reddit.com/r/television/comments/1xr6ys3/squid_game_ending_with_multiple_survivors_wouldve/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+      <div class="spoiler-banner">
+        Warning: Spoilers
+        <span class="spoiler-toggle" onclick="toggleSpoiler(this)">Show anyway</span>
+      </div>
+      
+
+      <div class="spoiler-content">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xr6ys3/squid_game_ending_with_multiple_survivors_wouldve/" target="_blank">Squid Game ending with multiple survivor&#39;s would&#39;ve been a far more interesting ending than what we got</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by BorderOpposite7776</span>
+
+          
+          
+          <span>16h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xr6ys3')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xr6ys3')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xr6ys3/squid_game_ending_with_multiple_survivors_wouldve/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xr6ys3', decodeURIComponent('Squid%20Game%20ending%20with%20multiple%20survivor%27s%20would%27ve%20been%20a%20far%20more%20interesting%20ending%20than%20what%20we%20got'), 'https://www.reddit.com/r/television/comments/1xr6ys3/squid_game_ending_with_multiple_survivors_wouldve/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xregvv"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xregvv"
+         data-title="The Exact Moment HR Gave Up on Valley Forge Auto - Netflix&#39;s Tires"
+         data-url="https://www.reddit.com/r/television/comments/1xregvv/the_exact_moment_hr_gave_up_on_valley_forge_auto/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xregvv/the_exact_moment_hr_gave_up_on_valley_forge_auto/" target="_blank">The Exact Moment HR Gave Up on Valley Forge Auto - Netflix&#39;s Tires</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by Able-Reveal</span>
+
+          
+          
+          <span>11h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xregvv')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xregvv')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xregvv/the_exact_moment_hr_gave_up_on_valley_forge_auto/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xregvv', decodeURIComponent('The%20Exact%20Moment%20HR%20Gave%20Up%20on%20Valley%20Forge%20Auto%20-%20Netflix%27s%20Tires'), 'https://www.reddit.com/r/television/comments/1xregvv/the_exact_moment_hr_gave_up_on_valley_forge_auto/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xr5n5b"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xr5n5b"
+         data-title="SNL - Buku Mobile (2 guys try to buy a phone from a Dominican phone store)"
+         data-url="https://www.reddit.com/r/television/comments/1xr5n5b/snl_buku_mobile_2_guys_try_to_buy_a_phone_from_a/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xr5n5b/snl_buku_mobile_2_guys_try_to_buy_a_phone_from_a/" target="_blank">SNL - Buku Mobile (2 guys try to buy a phone from a Dominican phone store)</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by Anchor_Aways</span>
+
+          
+          
+          <span>17h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xr5n5b')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xr5n5b')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xr5n5b/snl_buku_mobile_2_guys_try_to_buy_a_phone_from_a/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xr5n5b', decodeURIComponent('SNL%20-%20Buku%20Mobile%20%282%20guys%20try%20to%20buy%20a%20phone%20from%20a%20Dominican%20phone%20store%29'), 'https://www.reddit.com/r/television/comments/1xr5n5b/snl_buku_mobile_2_guys_try_to_buy_a_phone_from_a/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xrdaiu"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xrdaiu"
+         data-title="For real with the strip club scene there?🤦🏾‍♂️ [Dexter Resurrection - S2:Ep2]"
+         data-url="https://www.reddit.com/r/television/comments/1xrdaiu/for_real_with_the_strip_club_scene_there_dexter/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xrdaiu/for_real_with_the_strip_club_scene_there_dexter/" target="_blank">For real with the strip club scene there?🤦🏾‍♂️ [Dexter Resurrection - S2:Ep2]</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by Pessimistic_Gemini</span>
+
+          
+          
+          <span>12h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xrdaiu')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xrdaiu')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xrdaiu/for_real_with_the_strip_club_scene_there_dexter/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xrdaiu', decodeURIComponent('For%20real%20with%20the%20strip%20club%20scene%20there%3F%F0%9F%A4%A6%F0%9F%8F%BE%E2%80%8D%E2%99%82%EF%B8%8F%20%5BDexter%20Resurrection%20-%20S2%3AEp2%5D'), 'https://www.reddit.com/r/television/comments/1xrdaiu/for_real_with_the_strip_club_scene_there_dexter/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+    <div class="post"
+         id="post-t3_1xr9hry"
+         data-flair=""
+         data-show-name=""
+         data-post-id="t3_1xr9hry"
+         data-title="New Steven Universe opinions"
+         data-url="https://www.reddit.com/r/television/comments/1xr9hry/new_steven_universe_opinions/"
+         data-comments="0">
+
+      
+      
+
+      
+      
+
+      <div class="">
+        <a class="post-title" href="https://www.reddit.com/r/television/comments/1xr9hry/new_steven_universe_opinions/" target="_blank">New Steven Universe opinions</a>
+
+        <div class="post-meta">
+          <span>&#9650; 0</span>
+
+          
+          
+          <span class="badge-comments badge-50">0</span>
+          
+
+          <span>by Ok-Berry-8888</span>
+
+          
+          
+          <span>14h ago</span>
+          
+
+          
+          
+
+          
+          <span class="sentiment-badge sentiment-neutral">💬 Neutral discussion</span>
+
+          
+          
+
+          
+          <span class="reading-time">1 min read</span>
+        </div>
+
+        
+        
+        <div class="comments-section">
+          <div class="comment" style="color: #6b7280; font-style: italic;">
+            Comments unavailable for this thread.
+          </div>
+        </div>
+        
+      </div>
+
+      
+      <div class="post-actions">
+        <button class="action-btn mark-read-btn" onclick="markRead(this, 't3_1xr9hry')">&#10003; Read</button>
+        <button class="action-btn hide-btn" onclick="hidePost(this, 't3_1xr9hry')">&#10005; Hide</button>
+        <button class="action-btn share-btn" onclick="sharePost('https://www.reddit.com/r/television/comments/1xr9hry/new_steven_universe_opinions/')">&#128279; Share</button>
+        
+        <button class="action-btn bookmark-btn" onclick="toggleBookmark(this, 't3_1xr9hry', decodeURIComponent('New%20Steven%20Universe%20opinions'), 'https://www.reddit.com/r/television/comments/1xr9hry/new_steven_universe_opinions/')">&#128278; Save</button>
+      </div>
+    </div>
+    
+
+    
+
+    
+    <div class="footer">
+      
+      <div>Generated by <a href="#">The TV Signal</a> &middot; 2026-11-09 12:17:14 EST</div>
+      <div class="social-proof">Next digest: Tomorrow at 11 PM EST</div>
+    </div>
+
+    <script>
+    /* ================================================
+       Vanilla JS for all interactive features
+       localStorage-based, no dependencies
+       ================================================ */
+
+    // --- Utility ---
+    function getLS(key, def) {
+      try { var v = localStorage.getItem('tvs_' + key); return v ? JSON.parse(v) : def; }
+      catch(e) { return def; }
+    }
+    function setLS(key, val) {
+      try { localStorage.setItem('tvs_' + key, JSON.stringify(val)); } catch(e) {}
+    }
+
+    // --- #4 Smart Filtering ---
+    (function initFlairFilters() {
+      var flairs = new Set();
+      document.querySelectorAll('.post[data-flair]').forEach(function(p) {
+        var f = p.getAttribute('data-flair');
+        if (f) flairs.add(f);
+      });
+      var container = document.getElementById('flair-filters');
+      flairs.forEach(function(f) {
+        var btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.setAttribute('data-flair', f);
+        btn.textContent = f.charAt(0).toUpperCase() + f.slice(1);
+        btn.onclick = function() { filterByFlair(f); };
+        container.appendChild(btn);
+      });
+      // Restore saved filter
+      var saved = getLS('flair_filter', 'all');
+      if (saved !== 'all') filterByFlair(saved);
+    })();
+
+    function filterByFlair(flair) {
+      document.querySelectorAll('.filter-btn').forEach(function(b) {
+        b.classList.toggle('active', b.getAttribute('data-flair') === flair);
+      });
+      document.querySelectorAll('.post[data-flair]').forEach(function(p) {
+        if (flair === 'all' || p.getAttribute('data-flair') === flair) {
+          p.style.display = '';
+        } else {
+          p.style.display = 'none';
+        }
+      });
+      setLS('flair_filter', flair);
+    }
+
+    // --- #24 Difficulty Modes ---
+    (function initMode() {
+      var saved = getLS('read_mode', 'standard');
+      setMode(saved);
+    })();
+
+    function setMode(mode) {
+      document.querySelectorAll('.mode-btn').forEach(function(b) {
+        b.classList.toggle('active', b.getAttribute('data-mode') === mode);
+      });
+      document.body.classList.remove('mode-quick', 'mode-standard', 'mode-deep');
+      document.body.classList.add('mode-' + mode);
+      setLS('read_mode', mode);
+    }
+
+    // --- #8 Mark as Read ---
+    (function initRead() {
+      var read = getLS('read_posts', []);
+      read.forEach(function(id) {
+        var el = document.getElementById('post-' + id);
+        if (el) {
+          el.classList.add('read-post');
+          var btn = el.querySelector('.mark-read-btn');
+          if (btn) btn.classList.add('active');
+        }
+      });
+    })();
+
+    function markRead(btn, id) {
+      var read = getLS('read_posts', []);
+      var el = document.getElementById('post-' + id);
+      var idx = read.indexOf(id);
+      if (idx > -1) {
+        read.splice(idx, 1);
+        el.classList.remove('read-post');
+        btn.classList.remove('active');
+      } else {
+        read.push(id);
+        el.classList.add('read-post');
+        btn.classList.add('active');
+      }
+      setLS('read_posts', read);
+    }
+
+    // --- #8 Hide ---
+    (function initHidden() {
+      var hidden = getLS('hidden_posts', []);
+      hidden.forEach(function(id) {
+        var el = document.getElementById('post-' + id);
+        if (el) el.classList.add('hidden-post');
+      });
+    })();
+
+    function hidePost(btn, id) {
+      var hidden = getLS('hidden_posts', []);
+      if (hidden.indexOf(id) === -1) hidden.push(id);
+      setLS('hidden_posts', hidden);
+      var el = document.getElementById('post-' + id);
+      if (el) el.classList.add('hidden-post');
+    }
+
+    // --- #8 Share ---
+    function sharePost(url) {
+      if (navigator.share) {
+        navigator.share({ url: url });
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(url);
+      }
+    }
+
+    // --- #20 Spoiler Toggle ---
+    function toggleSpoiler(el) {
+      var content = el.closest('.spoiler-post').querySelector('.spoiler-content');
+      content.classList.toggle('revealed');
+      el.textContent = content.classList.contains('revealed') ? 'Hide' : 'Show anyway';
+    }
+
+    // --- #22 My Shows Tracking ---
+    (function initShows() {
+      var tracked = getLS('tracked_shows', []);
+      refreshShowsPanel(tracked);
+      // Highlight tracked and update buttons
+      document.querySelectorAll('.post[data-show-name]').forEach(function(p) {
+        var show = p.getAttribute('data-show-name');
+        if (show && tracked.indexOf(show) > -1) {
+          p.classList.add('tracked-show');
+          var btn = p.querySelector('.track-btn');
+          if (btn) { btn.classList.add('active'); btn.innerHTML = '&#9733; Tracked'; }
+        }
+      });
+    })();
+
+    function toggleTrack(btn, show) {
+      var tracked = getLS('tracked_shows', []);
+      var idx = tracked.indexOf(show);
+      if (idx > -1) {
+        tracked.splice(idx, 1);
+        btn.classList.remove('active');
+        btn.innerHTML = '&#9734; Track';
+        btn.closest('.post').classList.remove('tracked-show');
+      } else {
+        tracked.push(show);
+        btn.classList.add('active');
+        btn.innerHTML = '&#9733; Tracked';
+        btn.closest('.post').classList.add('tracked-show');
+      }
+      setLS('tracked_shows', tracked);
+      refreshShowsPanel(tracked);
+    }
+
+    function refreshShowsPanel(tracked) {
+      var panel = document.getElementById('my-shows-panel');
+      var list = document.getElementById('my-shows-list');
+      if (tracked.length === 0) { panel.classList.remove('visible'); return; }
+      panel.classList.add('visible');
+      list.innerHTML = '';
+      tracked.forEach(function(s) {
+        var tag = document.createElement('span');
+        tag.className = 'my-show-tag';
+        tag.textContent = s;
+        tag.onclick = function() { toggleTrack(null, s); refreshShowsPanel(getLS('tracked_shows', [])); };
+        list.appendChild(tag);
+      });
+    }
+
+    // --- #36 Bookmarks ---
+    (function initBookmarks() {
+      refreshBookmarksPanel();
+      var bookmarks = getLS('bookmarks', {});
+      Object.keys(bookmarks).forEach(function(id) {
+        var el = document.getElementById('post-' + id);
+        if (el) {
+          var btn = el.querySelector('.bookmark-btn');
+          if (btn) btn.classList.add('active');
+        }
+      });
+    })();
+
+    function toggleBookmark(btn, id, title, url) {
+      var bookmarks = getLS('bookmarks', {});
+      if (bookmarks[id]) {
+        delete bookmarks[id];
+        if (btn) btn.classList.remove('active');
+      } else {
+        bookmarks[id] = { title: title, url: url };
+        if (btn) btn.classList.add('active');
+      }
+      setLS('bookmarks', bookmarks);
+      refreshBookmarksPanel();
+    }
+
+    function refreshBookmarksPanel() {
+      var bookmarks = getLS('bookmarks', {});
+      var keys = Object.keys(bookmarks);
+      var panel = document.getElementById('bookmarks-panel');
+      var list = document.getElementById('bookmarks-list');
+      if (keys.length === 0) { panel.classList.remove('visible'); return; }
+      panel.classList.add('visible');
+      list.innerHTML = '';
+      keys.forEach(function(id) {
+        var a = document.createElement('a');
+        a.href = bookmarks[id].url;
+        a.target = '_blank';
+        a.textContent = bookmarks[id].title;
+        list.appendChild(a);
+      });
+    }
+
+    function exportBookmarks() {
+      var bookmarks = getLS('bookmarks', {});
+      var csv = 'Title,URL\n';
+      Object.keys(bookmarks).forEach(function(id) {
+        csv += '"' + bookmarks[id].title.replace(/"/g, '""') + '","' + bookmarks[id].url + '"\n';
+      });
+      var blob = new Blob([csv], { type: 'text/csv' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'tv_signal_bookmarks.csv';
+      a.click();
+    }
+    </script>
+  </body>
+</html>
